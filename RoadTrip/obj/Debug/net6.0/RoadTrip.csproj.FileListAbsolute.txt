@@ -1,0 +1,15 @@
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\bin\Debug\net6.0\RoadTrip.exe
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\bin\Debug\net6.0\RoadTrip.deps.json
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\bin\Debug\net6.0\RoadTrip.runtimeconfig.json
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\bin\Debug\net6.0\RoadTrip.dll
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\bin\Debug\net6.0\RoadTrip.pdb
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.csproj.AssemblyReference.cache
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.AssemblyInfoInputs.cache
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.AssemblyInfo.cs
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.csproj.CoreCompileInputs.cache
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.dll
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\refint\RoadTrip.dll
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.pdb
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\RoadTrip.genruntimeconfig.cache
+C:\Users\chris\source\repos\RoadTrip\RoadTrip\obj\Debug\net6.0\ref\RoadTrip.dll
