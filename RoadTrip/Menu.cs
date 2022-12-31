@@ -17,8 +17,10 @@ namespace RoadTrip
             Console.WriteLine("Enter \"NEW\" to start a new game.");
             Console.WriteLine("Enter \"LOAD\" to load a previously saved game.");
             Console.WriteLine("Enter \"QUIT\" to quit to desktop.");
-            string input = Console.ReadLine().ToUpper();
-            switch (input)
+            string? readline = Console.ReadLine();
+            
+            
+            switch (readline == null ? "" : readline.ToUpper())
             {
                 case "NEW":
                     Game game = new Game();

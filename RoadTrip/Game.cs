@@ -34,7 +34,7 @@ namespace RoadTrip
         private void GetInput()
         {
             string? readline = Console.ReadLine();
-            parser.ParseInput(readline == null ? "" : readline);
+            parser.ParseInput(readline == null ? "" : readline.ToUpper());
             ProcessScheduledEvents();
         }
 
