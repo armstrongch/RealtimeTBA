@@ -17,21 +17,22 @@ namespace RoadTrip
 
         private List<Event> EventQueue = new List<Event>();
         private List<Location> Locations = new List<Location>();
-
+        
         public Game()
         {
-            BuildWorld();
-            
             GameTime = 0;
             Timer = new PeriodicTimer(MillisecondsPerFrame);
             StartTimer();
+
+            //Test
+            SetupTestData();
 
             while (!Paused)
             {
                 GetInput();
             }
         }
-
+        
         private void GetInput()
         {
             string? readline = Console.ReadLine();
@@ -59,6 +60,20 @@ namespace RoadTrip
                     ProcessScheduledEvents();
                 }
             }
+        }
+
+        private void SetupTestData()
+        {
+            Func<string> test = TestFunc;
+            EventQueue.Add(new Event(GameTime + 10, test));
+            EventQueue.Add(new Event(GameTime + 15, test));
+            EventQueue.Add(new Event(GameTime + 15, test));
+            EventQueue.Add(new Event(GameTime + 15, test));
+        }
+
+        private string TestFunc()
+        {
+            return "This is the test function!";
         }
     }
 }
