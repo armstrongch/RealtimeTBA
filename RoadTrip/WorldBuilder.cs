@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Timers;
@@ -9,71 +10,23 @@ namespace RoadTrip
 {
     public partial class Game
     {
-        public int GameTime { get; private set; }
-        private PeriodicTimer Timer;
-        private static TimeSpan MillisecondsPerFrame = TimeSpan.FromSeconds(1);
-        private Parser parser = new Parser();
-        private bool Paused = false;
-
-        private List<Event> EventQueue = new List<Event>();
-        private List<Location> Locations = new List<Location>();
-        
-        public Game()
+        private void BuildWorld()
         {
-            GameTime = 0;
-            Timer = new PeriodicTimer(MillisecondsPerFrame);
-            StartTimer();
-
-            //Test
-            SetupTestData();
-
-            while (!Paused)
+            static string sleep_on(string itemName)
             {
-                GetInput();
+                return $"You sleep on the {itemName}.";
             }
-        }
-        
-        private void GetInput()
-        {
-            string? readline = Console.ReadLine();
-            parser.ParseInput(readline == null ? "" : readline.ToUpper());
-            ProcessScheduledEvents();
-        }
+            
+            Item bed = new Item("BED", new List<ItemAction>() {
+                    new ItemAction("sleep", ACTION_TYPE.WORLD, sleep_on)
+                });
+            
+            Location apartment = new Location(
+                "Apartment", "The place where you live.",
+                new List<Item>() { bed },
+                new Dictionary<string, Location>());
 
-        private async void StartTimer()
-        {
-            while (await Timer.WaitForNextTickAsync())
-            {
-                GameTime++;
-            }
-        }
-
-        private void ProcessScheduledEvents()
-        {
-            if (EventQueue.Count > 0)
-            {
-                Event nextEvent = EventQueue.OrderBy(e => e.ScheduledTime).First();
-                if (GameTime >= nextEvent.ScheduledTime)
-                {
-                    Console.WriteLine(nextEvent.Action());
-                    EventQueue.Remove(nextEvent);
-                    ProcessScheduledEvents();
-                }
-            }
-        }
-
-        private void SetupTestData()
-        {
-            Func<string> test = TestFunc;
-            EventQueue.Add(new Event(GameTime + 10, test));
-            EventQueue.Add(new Event(GameTime + 15, test));
-            EventQueue.Add(new Event(GameTime + 15, test));
-            EventQueue.Add(new Event(GameTime + 15, test));
-        }
-
-        private string TestFunc()
-        {
-            return "This is the test function!";
+            Locations.Add(apartment);
         }
     }
 }

@@ -10,9 +10,14 @@ namespace RoadTrip
     {
         private List<Item> Items = new List<Item>();
         private Dictionary<string, Location> Exits = new Dictionary<string, Location>();
+
+        public string Name { get; private set; }
+        public string Description { get; private set; }
         
-        public Location(List<Item> items, Dictionary<string, Location> exits)
+        public Location(string name, string description, List<Item> items, Dictionary<string, Location> exits)
         {
+            Name = name;
+            Description = description;
             Items = items;
             Exits = exits;
         }
