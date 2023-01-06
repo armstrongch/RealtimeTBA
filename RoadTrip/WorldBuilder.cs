@@ -12,13 +12,18 @@ namespace RoadTrip
     {
         private void BuildWorld()
         {
-            static string sleep_on(string itemName)
+            static string nap(string itemName)
             {
-                return $"You sleep on the {itemName}.";
+                return $"You take a quick nap in the {itemName}.";
             }
-            
+            static string sleep(string itemName)
+            {
+                return $"You take a long snooze in the {itemName}.";
+            }
+
             Item bed = new Item("BED", new List<ItemAction>() {
-                    new ItemAction("sleep", ACTION_TYPE.WORLD, sleep_on)
+                    new ItemAction("sleep", "Sleep in the bed.", ACTION_TYPE.WORLD, sleep),
+                    new ItemAction("nap", "Nap in the bed.", ACTION_TYPE.WORLD, nap)
                 });
             
             Location apartment = new Location(
@@ -27,6 +32,8 @@ namespace RoadTrip
                 new Dictionary<string, Location>());
 
             Locations.Add(apartment);
+
+            Player = new Player(apartment);
         }
     }
 }

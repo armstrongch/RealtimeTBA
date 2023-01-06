@@ -12,15 +12,17 @@ namespace RoadTrip
         INVENTORY = 1,
     }
     
-    internal class ItemAction
+    public class ItemAction
     {
         public string Name { get; private set; }
+        public string Description { get; private set; }
         public ACTION_TYPE Type { get; private set; }
         public Func<string, string> Action { get; private set; }
 
-        public ItemAction(string name, ACTION_TYPE type, Func<string, string> action)
+        public ItemAction(string name, string description, ACTION_TYPE type, Func<string, string> action)
         {
-            this.Name = name;
+            this.Name = name.ToUpper();
+            this.Description = description;
             this.Type = type;
             this.Action = action;
         }

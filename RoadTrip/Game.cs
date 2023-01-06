@@ -18,10 +18,13 @@ namespace RoadTrip
         private List<Event> EventQueue = new List<Event>();
         private List<Location> Locations = new List<Location>();
 
+        Player Player;
+
         public Game()
         {
             BuildWorld();
-            
+            ProcessInput(string.Empty);
+
             GameTime = 0;
             Timer = new PeriodicTimer(MillisecondsPerFrame);
             StartTimer();
@@ -35,8 +38,22 @@ namespace RoadTrip
         private void GetInput()
         {
             string? readline = Console.ReadLine();
-            parser.ParseInput(readline == null ? "" : readline.ToUpper());
+            string input = readline == null ? "" : readline.Trim().ToUpper();
+
+            ProcessInput(input);
+        }
+
+        private void ProcessInput(string input)
+        {
+            Console.WriteLine("*************************************************");
+
+            parser.ParseInput(input, Player.CurrentLocation);
+
             ProcessScheduledEvents();
+
+            PrintWorldStatus();
+
+            Console.WriteLine("Type HELP for help.");
         }
 
         private async void StartTimer()
@@ -59,6 +76,14 @@ namespace RoadTrip
                     ProcessScheduledEvents();
                 }
             }
+        }
+
+        private void PrintWorldStatus()
+        {
+            Location loc = Player.CurrentLocation;
+            Console.WriteLine("Current Location: " + loc.Name.ToUpper() + " (" + loc.Description + ")");
+            Console.WriteLine("Nearby Items: " + String.Join(", ", loc.GetItemNames()));
+            Console.WriteLine("Nearby Exits: " + String.Join(", ", loc.GetExitNames()));
         }
     }
 }

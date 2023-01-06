@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RoadTrip
 {
-    internal class Location
+    public class Location
     {
         private List<Item> Items = new List<Item>();
         private Dictionary<string, Location> Exits = new Dictionary<string, Location>();
@@ -56,6 +56,14 @@ namespace RoadTrip
             }
 
             return exitNames.ToArray();
+        }
+
+        public string[] GetItemActionNames(string itemName)
+        {
+            //If itemName matches the name of an item at this location, return that items actions.
+            //If itemName does not match an item at this location, return an empty array of strings.
+            Item? item = Items.FirstOrDefault(x => x.Name.ToUpper() == itemName);
+            return item != null ? item.GetItemActionNames() : Array.Empty<string>();
         }
     }
 }
