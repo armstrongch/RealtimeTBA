@@ -58,12 +58,18 @@ namespace RoadTrip
             return exitNames.ToArray();
         }
 
-        public string[] GetItemActionNames(string itemName)
+        public string[] GetItemActionNames(string itemName, bool includeDescriptions)
         {
             //If itemName matches the name of an item at this location, return that items actions.
             //If itemName does not match an item at this location, return an empty array of strings.
             Item? item = Items.FirstOrDefault(x => x.Name.ToUpper() == itemName);
-            return item != null ? item.GetItemActionNames() : Array.Empty<string>();
+            return item != null ? item.GetItemActionNames(ACTION_TYPE.WORLD, includeDescriptions) : Array.Empty<string>();
+        }
+
+        internal static void DoItemAction(string itemName, string itemActionName)
+        {
+            Console.WriteLine("Calling " + itemActionName + " action for " + itemName);
+            throw new NotImplementedException();
         }
     }
 }

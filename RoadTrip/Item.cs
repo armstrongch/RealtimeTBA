@@ -17,12 +17,17 @@ namespace RoadTrip
             this.ItemActions = ItemActions;
         }
 
-        public string[] GetItemActionNames()
+        public string[] GetItemActionNames(ACTION_TYPE type, bool includeDescriptions)
         {
             List<string> itemActionNames = new List<string>();
-            for (int i = 0; i < ItemActions.Count; i += 1)
+            foreach (ItemAction action in ItemActions.Where(a => a.Type == type).ToList())
             {
-                itemActionNames.Add(ItemActions[i].Name + " (" + ItemActions[i].Description + ")");
+                string itemActionName = action.Name;
+                if (includeDescriptions)
+                {
+                    itemActionName += " (" + action.Description + ")";
+                }
+                itemActionNames.Add(itemActionName);
             }
 
             return itemActionNames.ToArray();
