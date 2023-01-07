@@ -26,22 +26,10 @@ namespace RoadTrip
         {
             List<string> itemList = new List<string>();
             Items = Items.OrderBy(i => i.Name).ToList();
-            string previousName = string.Empty;
-            int previousNameCount = 1;
             
             foreach (Item i in Items)
             {
-                if (i.Name == previousName)
-                {
-                    previousNameCount += 1;
-                    itemList.Add(i.Name + " " + previousNameCount.ToString());
-                }
-                else
-                {
-                    previousName = i.Name;
-                    previousNameCount = 1;
-                    itemList.Add(i.Name);
-                }
+                itemList.Add(i.Name);
             }
 
             return itemList.ToArray();
@@ -60,16 +48,14 @@ namespace RoadTrip
 
         public string[] GetItemActionNames(string itemName, bool includeDescriptions)
         {
-            //If itemName matches the name of an item at this location, return that items actions.
-            //If itemName does not match an item at this location, return an empty array of strings.
-            Item? item = Items.FirstOrDefault(x => x.Name.ToUpper() == itemName);
-            return item != null ? item.GetItemActionNames(ACTION_TYPE.WORLD, includeDescriptions) : Array.Empty<string>();
+            Item item = Items.First(x => x.Name.ToUpper() == itemName);
+            return item.GetItemActionNames(ACTION_TYPE.WORLD, includeDescriptions);
         }
 
-        internal static void DoItemAction(string itemName, string itemActionName)
+        public void DoItemAction(string itemName, string itemActionName)
         {
-            Console.WriteLine("Calling " + itemActionName + " action for " + itemName);
-            throw new NotImplementedException();
+            Item item = Items.First(i => i.Name == itemName);
+            item.DoItemAction(itemActionName);
         }
     }
 }

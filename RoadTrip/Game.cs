@@ -47,7 +47,17 @@ namespace RoadTrip
         {
             Console.WriteLine("*************************************************");
 
-            parser.ParseInput(input, Player.CurrentLocation);
+            if (input != string.Empty)
+            {
+                try
+                {
+                    parser.ParseInput(input, Player.CurrentLocation);
+                }
+                catch
+                {
+                    Console.WriteLine("\"" + input + "\" is not valid input!");
+                }
+            }
 
             ProcessScheduledEvents();
 

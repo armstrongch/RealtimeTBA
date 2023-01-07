@@ -27,7 +27,6 @@ namespace RoadTrip
             string[] locationItemNames = location.GetItemNames();
             foreach (string itemName in locationItemNames)
             {
-                //TO-DO: Finish writing this loop!!
                 if (input.Contains(itemName))
                 {
                     if (itemName == input)
@@ -46,13 +45,15 @@ namespace RoadTrip
                         {
                             if (input.Contains(itemActionName))
                             {
-                                Location.DoItemAction(itemName, itemActionName);
+                                location.DoItemAction(itemName, itemActionName);
                                 return;
                             }
                         }
                     }
                 }
             }
+
+            throw new Exception("Failed to parse input " + input);
         }
     }
 }
