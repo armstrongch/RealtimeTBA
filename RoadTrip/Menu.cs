@@ -6,9 +6,11 @@ namespace RoadTrip
 {
     public class Menu
     {
+        public const string GameTitle = "UNIQUE GAME NAME";
+
         public Menu()
         {
-            Console.WriteLine("Welcome to [Insert Game Name Here].");
+            Console.WriteLine("Welcome to " + GameTitle + ".");
             ListOptions();
         }
 
@@ -23,7 +25,7 @@ namespace RoadTrip
             switch (readline == null ? "" : readline.ToUpper())
             {
                 case "NEW":
-                    Game game = new Game();
+                    Game game = new Game(GameTitle);
                     break;
                 case "LOAD":
                     Console.WriteLine("TO-DO: Implement Saving/Loading!");

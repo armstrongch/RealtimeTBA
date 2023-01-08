@@ -10,7 +10,8 @@ namespace RoadTrip
 {
     public partial class Game
     {
-        private void BuildWorld()
+        //Returns the player's starting location.
+        private Location BuildWorld()
         {
             static string nap(string itemName)
             {
@@ -33,7 +34,7 @@ namespace RoadTrip
 
             Locations.Add(apartment);
 
-            Player = new Player(apartment);
+            return apartment;
         }
     }
 }

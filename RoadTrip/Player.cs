@@ -10,10 +10,12 @@ namespace RoadTrip
     public class Player
     {
         public Location CurrentLocation { get; private set; }
+        public string Name { get; private set; }
 
-        public Player(Location startingLocation)
+        public Player(Location startingLocation, string name)
         {
             CurrentLocation = startingLocation;
+            Name = name;
         }
     }
 }
