@@ -109,14 +109,14 @@ namespace RoadTrip
         {
             Console.WriteLine("What is your name?");
             string playerName = string.Empty;
+            string saveGameDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), gameTitle);
+
             while (playerName == string.Empty)
             {
                 playerName = GetInput();
                 if (playerName != string.Empty)
                 {
-                    GameFilePath = Path.Combine(
-                        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-                        gameTitle + "_" + playerName + ".sav");
+                    GameFilePath = Path.Combine(saveGameDirectory, playerName + ".sav");
 
                     if (File.Exists(GameFilePath))
                     {
@@ -137,6 +137,10 @@ namespace RoadTrip
             }
             if (!File.Exists(GameFilePath))
             {
+                if (!Directory.Exists(saveGameDirectory))
+                {
+                    Directory.CreateDirectory(saveGameDirectory);
+                }
                 File.Create(GameFilePath);
             }
             Console.WriteLine("Welcome, " + playerName);
