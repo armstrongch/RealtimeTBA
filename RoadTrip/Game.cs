@@ -152,15 +152,53 @@ namespace RoadTrip
         private void SaveGame()
         {
             XmlDocument xmlDoc = new XmlDocument();
-            XmlNode locationsRootNode = xmlDoc.CreateElement("locations");
+            XmlNode locationsRootNode = xmlDoc.CreateElement("locationList");
             xmlDoc.AppendChild(locationsRootNode);
 
-            XmlNode locationNode;
+            /*
+            <locationList>
+                <location name="Location Name">
+                    <description>Location Description</description>
+                    <itemList>
+                        <item>Item Name</item>
+                        <item>Item Name</item>
+                    </itemList>
+                </location>
+                <location name="Location Name">
+                    <description>Location Description</description>
+                    <itemList>
+                        <item>Item Name</item>
+                        <item>Item Name</item>
+                    </itemList>
+                </location>
+            </locationList>
+            */
+
             foreach (Location location in Locations)
             {
-                locationNode = xmlDoc.CreateElement("location");
-                throw new NotImplementedException();
+                XmlNode locationNode = xmlDoc.CreateElement("location");
+                
+                XmlAttribute locationName = xmlDoc.CreateAttribute("name");
+                locationName.Value = location.Name;
+                locationNode.Attributes.Append(locationName);
+
+                XmlNode description = xmlDoc.CreateElement("description");
+                description.InnerText = location.Description;
+                locationNode.AppendChild(description);
+
+                XmlNode itemList = xmlDoc.CreateElement("itemList");
+                foreach(string itemName in location.GetItemNames())
+                {
+                    XmlNode item = xmlDoc.CreateElement("item");
+                    item.InnerText = itemName;
+                    itemList.AppendChild(item);
+                }
+                locationNode.AppendChild(itemList);
+
+                locationsRootNode.AppendChild(locationNode);
             }
+
+            xmlDoc.Save(GameFilePath);
 
         }
     }
