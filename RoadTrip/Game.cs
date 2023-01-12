@@ -47,6 +47,8 @@ namespace RoadTrip
             Locations = LoadLocationList(xmlDoc);
             Player = LoadPlayer(xmlDoc);
 
+            GameFilePath = saveGameLocation;
+
             StartGame();
         }
 
@@ -62,6 +64,7 @@ namespace RoadTrip
             {
                 string input = GetInput();
                 ProcessInput(input);
+                SaveGame();
             }
         }
 
