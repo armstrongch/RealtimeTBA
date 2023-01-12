@@ -13,19 +13,7 @@ namespace RoadTrip
         //Returns the player's starting location.
         private Location BuildWorld()
         {
-            static string nap(string itemName)
-            {
-                return $"You take a quick nap in the {itemName}.";
-            }
-            static string sleep(string itemName)
-            {
-                return $"You take a long snooze in the {itemName}.";
-            }
-
-            Item bed = new Item("BED", new List<ItemAction>() {
-                    new ItemAction("sleep", "Sleep in the bed.", ACTION_TYPE.WORLD, sleep),
-                    new ItemAction("nap", "Nap in the bed.", ACTION_TYPE.WORLD, nap)
-                });
+            Item bed = ItemFactory.GenerateItem("BED");
             
             Location apartment = new Location(
                 "Apartment", "The place where you live.",

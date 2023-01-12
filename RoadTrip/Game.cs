@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Timers;
+using System.Xml;
 
 namespace RoadTrip
 {
@@ -144,11 +145,22 @@ namespace RoadTrip
                 File.Create(GameFilePath);
             }
             Console.WriteLine("Welcome, " + playerName);
+            SaveGame();
             return playerName;
         }
     
         private void SaveGame()
         {
+            XmlDocument xmlDoc = new XmlDocument();
+            XmlNode locationsRootNode = xmlDoc.CreateElement("locations");
+            xmlDoc.AppendChild(locationsRootNode);
+
+            XmlNode locationNode;
+            foreach (Location location in Locations)
+            {
+                locationNode = xmlDoc.CreateElement("location");
+                throw new NotImplementedException();
+            }
 
         }
     }
