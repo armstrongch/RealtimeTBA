@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Timers;
 
@@ -21,21 +23,53 @@ namespace RoadTrip
             Console.WriteLine("Enter \"QUIT\" to quit to desktop.");
             string? readline = Console.ReadLine();
             
-            
-            switch (readline == null ? "" : readline.ToUpper())
+            switch (readline == null ? string.Empty : readline.ToUpper())
             {
                 case "NEW":
                     Game game = new Game(GameTitle);
                     break;
                 case "LOAD":
-                    Console.WriteLine("TO-DO: Implement Saving/Loading!");
-                    ListOptions();
+                    LoadGame();
                     break;
                 case "QUIT":
                     break;
                 default:
                     ListOptions();
                     break;
+            }
+        }
+
+        public void LoadGame()
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), GameTitle);
+            string[] saveNames = Directory.GetFiles(path);
+
+            if (saveNames.Length > 0)
+            {
+                Console.WriteLine("Which saved game would you like to load?");
+                foreach (string saveName in saveNames)
+                {
+                    string fileName = Path.GetFileNameWithoutExtension(saveName);
+                    Console.WriteLine(fileName);
+                }
+
+                string? input = Console.ReadLine();
+                string formattedInput = input == null ? string.Empty : input.ToUpper();
+                foreach (string saveName in saveNames)
+                {
+                    if (Path.GetFileNameWithoutExtension(saveName).Equals(formattedInput))
+                    {
+                        Game game = new Game(GameTitle, saveName);
+                        break;
+                    }
+                }
+                Console.WriteLine("Could not find a saved game called: " + formattedInput);
+                ListOptions();
+            }
+            else
+            {
+                Console.WriteLine("Could not find any saved games.");
+                ListOptions();
             }
         }
     }

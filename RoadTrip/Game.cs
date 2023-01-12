@@ -44,6 +44,11 @@ namespace RoadTrip
             }
         }
 
+        public Game(string gameTitle, string saveGameLocation)
+        {
+            throw new NotImplementedException();
+        }
+
         // When Console.Readline returns NULL, this returns an empty string.
         // Otherwise, this returns the user input with Trim and ToUpper.
         private string GetInput()
@@ -154,25 +159,6 @@ namespace RoadTrip
             XmlDocument xmlDoc = new XmlDocument();
             XmlNode locationsRootNode = xmlDoc.CreateElement("locationList");
             xmlDoc.AppendChild(locationsRootNode);
-
-            /*
-            <locationList>
-                <location name="Location Name">
-                    <description>Location Description</description>
-                    <itemList>
-                        <item>Item Name</item>
-                        <item>Item Name</item>
-                    </itemList>
-                </location>
-                <location name="Location Name">
-                    <description>Location Description</description>
-                    <itemList>
-                        <item>Item Name</item>
-                        <item>Item Name</item>
-                    </itemList>
-                </location>
-            </locationList>
-            */
 
             foreach (Location location in Locations)
             {
