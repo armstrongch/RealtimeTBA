@@ -16,11 +16,23 @@ namespace RoadTrip
             Item bed = ItemFactory.GenerateItem("BED");
             
             Location apartment = new Location(
-                "Apartment", "The place where you live.",
+                "APARTMENT", "The place where you live.",
                 new List<Item>() { bed },
-                new Dictionary<string, Location>());
+                new Dictionary<string, string>()
+                {
+                    { "APARTMENT BATHROOM", "APARTMENT BATHROOM" }
+                });
+
+            Location apartmentBathroom = new Location(
+                "APARTMENT BATHROOM", "An adjoining closet containing a shower, toilet, and sink.",
+                new List<Item>(),
+                new Dictionary<string, string>()
+                {
+                    { "APARTMENT", "APARTMENT" }
+                });
 
             Locations.Add(apartment);
+            Locations.Add(apartmentBathroom);
 
             return apartment;
         }

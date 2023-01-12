@@ -17,5 +17,11 @@ namespace RoadTrip
             CurrentLocation = startingLocation;
             Name = name;
         }
+
+        public void TravelToLocation(Location newLocation)
+        {
+            Console.WriteLine("Travelling to: " + newLocation.Name);
+            CurrentLocation = newLocation;
+        }
     }
 }

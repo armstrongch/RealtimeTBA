@@ -9,17 +9,27 @@ namespace RoadTrip
     public class Location
     {
         private List<Item> Items = new List<Item>();
-        private Dictionary<string, Location> Exits = new Dictionary<string, Location>();
+        private Dictionary<string, string> Exits = new Dictionary<string, string>();
 
         public string Name { get; private set; }
         public string Description { get; private set; }
         
-        public Location(string name, string description, List<Item> items, Dictionary<string, Location> exits)
+        public Location(string name, string description, List<Item> items, Dictionary<string, string> exits)
         {
             Name = name;
             Description = description;
             Items = items;
-            Exits = exits;
+            for (int i = 0; i < exits.Count; i++)
+            {
+                string exitName = exits.Keys.ElementAt(i);
+                string locationName = exits[exitName];
+                AddExit(exitName, locationName);
+            }
+        }
+
+        public void AddExit(string exitName, string locationName)
+        {
+            Exits.Add(exitName.ToUpper(), locationName.ToUpper());
         }
 
         public string[] GetItemNames()
@@ -56,6 +66,11 @@ namespace RoadTrip
         {
             Item item = Items.First(i => i.Name == itemName);
             item.DoItemAction(itemActionName);
+        }
+
+        public string GetLocationNameFromExitName(string exitName)
+        {
+            return Exits[exitName];
         }
     }
 }

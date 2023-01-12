@@ -13,7 +13,7 @@ namespace RoadTrip
             
         }
 
-        public void ParseInput(string input, Location location)
+        public void ParseInput(string input, Player player, List<Location> locations)
         {
             if (input == "HELP")
             {
@@ -24,14 +24,16 @@ namespace RoadTrip
                 return;
             }
 
-            string[] locationItemNames = location.GetItemNames();
+            Location playerLocation = player.CurrentLocation;
+
+            string[] locationItemNames = playerLocation.GetItemNames();
             foreach (string itemName in locationItemNames)
             {
                 if (input.Contains(itemName))
                 {
                     if (itemName == input)
                     {
-                        string[] itemActionDescriptions = location.GetItemActionNames(itemName, true);
+                        string[] itemActionDescriptions = playerLocation.GetItemActionNames(itemName, true);
                         if (itemActionDescriptions.Length > 0)
                         {
                             Console.WriteLine("Here is what you can do with " + itemName + ":\r\n" + String.Join("\r\n", itemActionDescriptions));
@@ -40,12 +42,12 @@ namespace RoadTrip
                     }
                     else
                     {
-                        string[] itemActionNames = location.GetItemActionNames(itemName, false);
+                        string[] itemActionNames = playerLocation.GetItemActionNames(itemName, false);
                         foreach (string itemActionName in itemActionNames)
                         {
                             if (input.Contains(itemActionName))
                             {
-                                location.DoItemAction(itemName, itemActionName);
+                                playerLocation.DoItemAction(itemName, itemActionName);
                                 return;
                             }
                         }
@@ -53,6 +55,14 @@ namespace RoadTrip
                 }
             }
 
+            string[] exitNames = playerLocation.GetExitNames();
+            if (exitNames.Contains(input))
+            {
+                string targetLocationName = playerLocation.GetLocationNameFromExitName(input);
+                Location targetLocation = locations.Where(x => x.Name == targetLocationName).FirstOrDefault();
+                player.TravelToLocation(targetLocation);
+                return;
+            }
             throw new Exception("Failed to parse input " + input);
         }
     }
