@@ -190,9 +190,28 @@ namespace RoadTrip
             XmlNode currentLocation = xmlDoc.CreateElement("currentLocation");
             currentLocation.InnerText = Player.CurrentLocation.Name;
             playerNode.AppendChild(currentLocation);
-            
+
+            //<attributeList>
+            XmlNode attributeList = xmlDoc.CreateElement("attributeList");
+            for (int i = 0; i < Player.Attributes.Count; i += 1)
+            {
+                XmlNode attribute = xmlDoc.CreateElement("attribute");
+                
+                XmlAttribute attributeType = xmlDoc.CreateAttribute("type");
+                ATTRIBUTES type = Player.Attributes.Keys.ElementAt(i);
+                attributeType.Value = type.ToString();
+                attribute.Attributes.Append(attributeType);
+                
+                XmlAttribute attributeValue = xmlDoc.CreateAttribute("value");
+                attributeValue.Value = Player.Attributes[type].ToString();
+                attribute.Attributes.Append(attributeValue);
+
+                attributeList.AppendChild(attribute);
+            }
+            playerNode.AppendChild(attributeList);
+
             rootNode.AppendChild(playerNode);
-            
+
             //<locationsList>
             XmlNode locationList = xmlDoc.CreateElement("locationList");
             rootNode.AppendChild(locationList);
