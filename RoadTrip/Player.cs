@@ -32,11 +32,9 @@ namespace RoadTrip
                 { SKILLS.CHARISMA, 0 },
                 { SKILLS.BRAVERY, 0 },
                 { SKILLS.STRENGTH, 0 },
-                {  SKILLS.INTELLIGENCE, 0 }
+                { SKILLS.INTELLIGENCE, 0 }
             };
-            
-            //throw new NotImplementedException("Add player inventory to saving and loading!");
-            //throw new NotImplementedException("Add player inventory action selection!");
+            Inventory = new List<Item>();
         }
 
         public void TravelToLocation(Location newLocation)
@@ -62,6 +60,36 @@ namespace RoadTrip
         public void UpdateSkillValue(SKILLS skill, int value)
         {
             SkillValues[skill] = value;
+        }
+
+        public void PickUpItem(Item item)
+        {
+            Inventory.Add(item);
+        }
+
+        public string[] GetItemNames()
+        {
+            List<string> itemList = new List<string>();
+            Inventory = Inventory.OrderBy(i => i.Name).ToList();
+
+            foreach (Item i in Inventory)
+            {
+                itemList.Add(i.Name);
+            }
+
+            return itemList.ToArray();
+        }
+
+        public string[] GetItemActionNames(string itemName, bool includeDescriptions)
+        {
+            Item item = Inventory.First(x => x.Name.ToUpper() == itemName);
+            return item.GetItemActionNames(ACTION_TYPE.INVENTORY, includeDescriptions);
+        }
+
+        public void DoItemAction(string itemName, string itemActionName)
+        {
+            Item item = Inventory.First(i => i.Name == itemName);
+            item.DoItemAction(itemActionName);
         }
     }
 }

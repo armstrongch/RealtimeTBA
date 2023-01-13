@@ -50,6 +50,17 @@ namespace RoadTrip
             }
             playerNode.AppendChild(skills);
 
+            //<items>
+            XmlNode inventoryItems = xmlDoc.CreateElement("items");
+            foreach (Item inventoryItem in Player.Inventory)
+            {
+                //<item>Item Name</item>
+                XmlNode item = xmlDoc.CreateElement("item");
+                item.InnerText = inventoryItem.Name;
+                inventoryItems.AppendChild(item);
+            }
+            playerNode.AppendChild(inventoryItems);
+
             rootNode.AppendChild(playerNode);
 
             //<locationsList>
@@ -70,16 +81,16 @@ namespace RoadTrip
                 description.InnerText = location.Description;
                 locationNode.AppendChild(description);
 
-                //<itemList>
-                XmlNode itemList = xmlDoc.CreateElement("itemList");
+                //<items>
+                XmlNode locationItems = xmlDoc.CreateElement("items");
                 foreach (string itemName in location.GetItemNames())
                 {
                     //<item>Item Name</item>
                     XmlNode item = xmlDoc.CreateElement("item");
                     item.InnerText = itemName;
-                    itemList.AppendChild(item);
+                    locationItems.AppendChild(item);
                 }
-                locationNode.AppendChild(itemList);
+                locationNode.AppendChild(locationItems);
 
                 //<exitList>
                 XmlNode exitList = xmlDoc.CreateElement("exitList");
@@ -113,10 +124,10 @@ namespace RoadTrip
                 string locationName = locationNode.Attributes.GetNamedItem("locationName").Value;
                 string locationDesc = locationNode.SelectSingleNode("description").InnerText;
 
-                List<Item> itemList = new List<Item>();
-                foreach (XmlNode itemNode in locationNode.SelectSingleNode("itemList").ChildNodes)
+                List<Item> items = new List<Item>();
+                foreach (XmlNode itemNode in locationNode.SelectSingleNode("items").ChildNodes)
                 {
-                    itemList.Add(ItemFactory.GenerateItem(itemNode.InnerText));
+                    items.Add(ItemFactory.GenerateItem(itemNode.InnerText));
                 }
 
                 Dictionary<string, string> exitList = new Dictionary<string, string>();
@@ -126,7 +137,7 @@ namespace RoadTrip
                 }
 
 
-                Location location = new Location(locationName, locationDesc, itemList, exitList);
+                Location location = new Location(locationName, locationDesc, items, exitList);
                 locationList.Add(location);
             }
             return locationList;
@@ -146,6 +157,13 @@ namespace RoadTrip
                 string skillType = skillvalue.Attributes["type"].Value;
                 string skillValue = skillvalue.Attributes["value"].Value;
                 player.UpdateSkillValue(skillType, int.Parse(skillValue));
+            }
+
+            XmlNode inventoryNode = playerNode.SelectSingleNode("items");
+            foreach (XmlNode item in inventoryNode.ChildNodes)
+            {
+                string itemName = item.InnerText;
+                player.PickUpItem(ItemFactory.GenerateItem(itemName));
             }
             return player;
         }

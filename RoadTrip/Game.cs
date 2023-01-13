@@ -32,6 +32,9 @@ namespace RoadTrip
             Location startingLocation = BuildWorld();
             
             Player = new Player(startingLocation, GetPlayerName(gameTitle));
+
+            SetupPlayerInventory();
+
             SaveGame();
 
             StartGame();
@@ -64,8 +67,12 @@ namespace RoadTrip
             while (!Paused)
             {
                 string input = GetInput();
-                ProcessInput(input);
+                Paused = ProcessInput(input);
                 SaveGame();
+                if (Paused)
+                {
+                    throw new NotImplementedException("Add Quit YN dialog and figure out how to pause the periodic timer.");
+                }
             }
         }
 
@@ -78,15 +85,17 @@ namespace RoadTrip
             return input;
         }
 
-        private void ProcessInput(string input)
+        private bool ProcessInput(string input)
         {
+            bool paused = false;
+            
             Console.WriteLine("*************************************************");
 
             if (input != string.Empty)
             {
                 try
                 {
-                    parser.ParseInput(input, Player, Locations);
+                    paused = parser.ParseInput(input, Player, Locations);
                 }
                 catch
                 {
@@ -98,7 +107,12 @@ namespace RoadTrip
 
             PrintWorldStatus();
 
-            Console.WriteLine("Type HELP for help.");
+            if (!paused)
+            {
+                Console.WriteLine("Type HELP for help. Type QUIT to quit.");
+            }
+
+            return paused;
         }
 
         private async void StartTimer()
@@ -129,6 +143,7 @@ namespace RoadTrip
             Console.WriteLine("Current Location: " + loc.Name.ToUpper() + " (" + loc.Description + ")");
             Console.WriteLine("Nearby Items: " + String.Join(", ", loc.GetItemNames()));
             Console.WriteLine("Nearby Exits: " + String.Join(", ", loc.GetExitNames()));
+            Console.WriteLine("Items in your Pockets: " + String.Join(", ", Player.GetItemNames()));
         }
 
         private string GetPlayerName(string gameTitle)

@@ -13,7 +13,7 @@ namespace RoadTrip
         //Returns the player's starting location.
         private Location BuildWorld()
         {
-            Item bed = ItemFactory.GenerateItem("BED");
+            Item bed = ItemFactory.GenerateItem(ITEMS.BED);
             
             Location apartment = new Location(
                 "APARTMENT", "The place where you live.",
@@ -35,6 +35,11 @@ namespace RoadTrip
             Locations.Add(apartmentBathroom);
 
             return apartment;
+        }
+
+        private void SetupPlayerInventory()
+        {
+            Player.PickUpItem(ItemFactory.GenerateItem(ITEMS.WALLET));
         }
     }
 }
