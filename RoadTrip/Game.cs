@@ -88,8 +88,7 @@ namespace RoadTrip
         private bool ProcessInput(string input)
         {
             bool paused = false;
-            
-            Console.WriteLine("*************************************************");
+            Console.Clear();
 
             if (input != string.Empty)
             {
@@ -104,6 +103,8 @@ namespace RoadTrip
             }
 
             ProcessScheduledEvents();
+
+            Console.WriteLine("*************************************************");
 
             PrintWorldStatus();
 
@@ -182,7 +183,7 @@ namespace RoadTrip
                 {
                     Directory.CreateDirectory(saveGameDirectory);
                 }
-                File.Create(GameFilePath);
+                File.Create(GameFilePath).Close();
             }
             Console.WriteLine("Welcome, " + playerName);
             return playerName;
