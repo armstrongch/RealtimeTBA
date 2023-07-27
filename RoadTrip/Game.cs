@@ -18,7 +18,6 @@ namespace RoadTrip
         private Parser parser = new Parser();
         private bool Paused = false;
 
-        private List<Event> EventQueue = new List<Event>();
         private List<Location> Locations = new List<Location>();
 
         Player Player;
@@ -102,8 +101,6 @@ namespace RoadTrip
                 }
             }
 
-            ProcessScheduledEvents();
-
             Console.WriteLine("*************************************************");
 
             PrintWorldStatus();
@@ -121,20 +118,6 @@ namespace RoadTrip
             while (await Timer.WaitForNextTickAsync())
             {
                 GameTime++;
-            }
-        }
-
-        private void ProcessScheduledEvents()
-        {
-            if (EventQueue.Count > 0)
-            {
-                Event nextEvent = EventQueue.OrderBy(e => e.ScheduledTime).First();
-                if (GameTime >= nextEvent.ScheduledTime)
-                {
-                    Console.WriteLine(nextEvent.Action());
-                    EventQueue.Remove(nextEvent);
-                    ProcessScheduledEvents();
-                }
             }
         }
 
