@@ -32,6 +32,7 @@ namespace RoadTrip
                     LoadGame();
                     break;
                 case "QUIT":
+                    Environment.Exit(0);
                     break;
                 default:
                     ListOptions();

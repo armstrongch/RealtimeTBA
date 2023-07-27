@@ -16,7 +16,7 @@ namespace RoadTrip
         private PeriodicTimer Timer;
         private static TimeSpan MillisecondsPerFrame = TimeSpan.FromSeconds(1);
         private Parser parser = new Parser();
-        private bool Paused = false;
+        private bool QuitGame = false;
 
         private List<Location> Locations = new List<Location>();
 
@@ -63,14 +63,14 @@ namespace RoadTrip
             Timer = new PeriodicTimer(MillisecondsPerFrame);
             StartTimer();
 
-            while (!Paused)
+            while (!QuitGame)
             {
                 string input = GetInput();
-                Paused = ProcessInput(input);
+                QuitGame = ProcessInput(input);
                 SaveGame();
-                if (Paused)
+                if (QuitGame)
                 {
-                    throw new NotImplementedException("Add Quit YN dialog and figure out how to pause the periodic timer.");
+                    Environment.Exit(0);
                 }
             }
         }
